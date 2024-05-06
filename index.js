@@ -35,11 +35,11 @@ let spill = {
     poeng: 0
 };
 
-let toppRør = {
+let toppRoer = {
     bilde: null
 };
 
-let bunnRør = {
+let bunnRoer = {
     bilde: null
 };
 
@@ -78,18 +78,39 @@ function oppdater() {
 
     kontekst.clearRect(0, 0, brett.element.width, brett.element.height);
 
-    // Fugl
-    fysikk.fartY += fysikk.tyngdekraft;
-    fugl.y = Math.max(fugl.y + fysikk.fartY, 0);
-    kontekst.drawImage(fugl.bilde, fugl.x, fugl.y, fugl.bredde, fugl.høyde);
+    tegnFugl();
 
-    if (fugl.y > brett.høyde || fugl.y < 0) {
-        spill.slutt = true;
-        spillSlutt();
+    tegnRoer();
+  
+
+    // Poeng
+    kontekst.fillStyle = "white";
+    kontekst.font = "45px sans-serif";
+    kontekst.fillText(spill.poeng, 5, 45);
+
+    if (spill.slutt) {
+        kontekst.fillText("SPILL SLUTT", 5, 90);
     }
 
-    // Rør
-    for (let i = 0; i < rør.array.length; i++) {
+    requestAnimationFrame(oppdater);
+
+}
+
+function tegnFugl() {
+      // Fugl
+      fysikk.fartY += fysikk.tyngdekraft;
+      fugl.y = Math.max(fugl.y + fysikk.fartY, 0);
+      kontekst.drawImage(fugl.bilde, fugl.x, fugl.y, fugl.bredde, fugl.høyde);
+  
+      if (fugl.y > brett.høyde || fugl.y < 0) {
+          spill.slutt = true;
+          spillSlutt();
+      }
+}
+
+function tegnRoer(){
+     // Roer
+     for (let i = 0; i < rør.array.length; i++) {
         let rørObjekt = rør.array[i];
         rørObjekt.x += fysikk.fartX;
         kontekst.drawImage(rørObjekt.bilde, rørObjekt.x, rørObjekt.y, rørObjekt.bredde, rørObjekt.høyde);
@@ -115,48 +136,36 @@ function oppdater() {
     while (rør.array.length > 0 && rør.array[0].x < -rør.bredde) {
         rør.array.shift();
     }
-
-    // Poeng
-    kontekst.fillStyle = "white";
-    kontekst.font = "45px sans-serif";
-    kontekst.fillText(spill.poeng, 5, 45);
-
-    if (spill.slutt) {
-        kontekst.fillText("SPILL SLUTT", 5, 90);
-    }
-
-    requestAnimationFrame(oppdater);
-
 }
 
-function plasserRør() {
+function plasserRoer() {
     if (spill.slutt) {
         return;
     }
 
-    let tilfeldigRørY = rør.y - rør.høyde / 4 - Math.random() * (rør.høyde / 2);
+    let tilfeldigRoerY = rør.y - rør.høyde / 4 - Math.random() * (rør.høyde / 2);
     let åpningsplass = brett.høyde / 4;
 
-    let toppRørObjekt = {
-        bilde: toppRør.bilde,
+    let toppRoerObjekt = {
+        bilde: toppRoer.bilde,
         x: rør.x,
-        y: tilfeldigRørY,
+        y: tilfeldigRoerY,
         bredde: rør.bredde,
         høyde: rør.høyde,
         passert: false
     };
     
-    rør.array.push(toppRørObjekt);
+    rør.array.push(toppRoerObjekt);
 
-    let bunnRørObjekt = {
-        bilde: bunnRør.bilde,
+    let bunnRoerObjekt = {
+        bilde: bunnRoer.bilde,
         x: rør.x,
-        y: tilfeldigRørY + rør.høyde + åpningsplass,
+        y: tilfeldigRoerY + rør.høyde + åpningsplass,
         bredde: rør.bredde,
         høyde: rør.høyde,
         passert: false
     };
-    rør.array.push(bunnRørObjekt);
+    rør.array.push(bunnRoerObjekt);
 }
 
 function flyttFugl(e) {
@@ -218,10 +227,10 @@ function startSpill() {
 
     resetSpill();
 
-    rørIntervall = setInterval(plasserRør, 1500);
+    rørIntervall = setInterval(plasserRoer, 1500);
     document.addEventListener("keydown", flyttFugl);
 
-    console.log(fysikk, rør, fugl, brett, bunnRør, toppRør, spill)
+    console.log(fysikk, rør, fugl, brett, bunnRoer, toppRoer, spill)
 
     brett.element = document.getElementById("brett");
     brett.element.height = brett.høyde;
@@ -234,11 +243,11 @@ function startSpill() {
         kontekst.drawImage(fugl.bilde, fugl.x, fugl.y, fugl.bredde, fugl.høyde);
     };
 
-    toppRør.bilde = new Image();
-    toppRør.bilde.src = "Bilder/toppipe.png";
+    toppRoer.bilde = new Image();
+    toppRoer.bilde.src = "Bilder/toppipe.png";
 
-    bunnRør.bilde = new Image();
-    bunnRør.bilde.src = "Bilder/bottompipe.png";
+    bunnRoer.bilde = new Image();
+    bunnRoer.bilde.src = "Bilder/bottompipe.png";
 
 
     oppdater();
