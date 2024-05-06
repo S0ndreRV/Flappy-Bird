@@ -49,68 +49,33 @@ const stolpeTrefferLydfil = new Audio("Lyder/flappy-treff-stolpe.mp3");
 const dødLydfil = new Audio("Lyder/flappydie.mp3");
 const poengLydfil = new Audio("Lyder/flappypoint.mp3");
 
+let rørIntervall = null;
 
 let leaderboard = [];
 
 
 function resetSpill() {
+    console.log("RESET Spill")
+    if (rørIntervall) {
+        clearInterval(rørIntervall);
+        rørIntervall = null;
+        console.log("clearinterval")
+    }
     fugl.y = brett.høyde / 2;
     rør.array = [];
-    fysikk.fartX = -2;
-    fysikk.fartY = 0;
+    fysikk.fartX=-2
+    fysikk.fartY=0
     spill.poeng = 0;
     spill.slutt = false;
-
-
 }
-
-// Starter spillet
-function startSpill() {
-
-
-    console.log(fysikk, rør, fugl, brett, bunnRør, toppRør, spill)
-
-    brett.element = document.getElementById("brett");
-    brett.element.height = brett.høyde;
-    brett.element.width = brett.bredde;
-    kontekst = brett.element.getContext("2d");
-
-    fugl.bilde = new Image();
-    fugl.bilde.src = "Bilder/flappybird.png";
-    fugl.bilde.onload = function () {
-        kontekst.drawImage(fugl.bilde, fugl.x, fugl.y, fugl.bredde, fugl.høyde);
-    };
-
-    toppRør.bilde = new Image();
-    toppRør.bilde.src = "Bilder/toppipe.png";
-
-    bunnRør.bilde = new Image();
-    bunnRør.bilde.src = "Bilder/bottompipe.png";
-
-
-    if (localStorage.getItem("leaderboard")) {
-        leaderboard = JSON.parse(localStorage.getItem("leaderboard"));
-        oppdaterLeaderboard();
-    }
-
-
-    setInterval(plasserRør, 1500);
-    document.addEventListener("keydown", flyttFugl);
-    requestAnimationFrame(oppdater);
-
-    resetSpill();
-
-}
-
 
 function oppdater() {
 
-    requestAnimationFrame(oppdater);
-
-
     if (spill.slutt) {
         return;
+ 
     }
+
     kontekst.clearRect(0, 0, brett.element.width, brett.element.height);
 
     // Fugl
@@ -140,9 +105,10 @@ function oppdater() {
             stolpeTrefferLydfil.play();
             setTimeout(function () {
                 dødLydfil.play();
-            }, stolpeTrefferLydfil.duration * 1000); // Vent til stolpeTrefferLydfil er ferdig før dødLydfil spilles
-            spillSlutt(); // Leaderboard
+            }, stolpeTrefferLydfil.duration * 1000); 
+            spillSlutt(); 
         }
+
     }
 
     // Fjern rør
@@ -158,6 +124,8 @@ function oppdater() {
     if (spill.slutt) {
         kontekst.fillText("SPILL SLUTT", 5, 90);
     }
+
+    requestAnimationFrame(oppdater);
 
 }
 
@@ -177,6 +145,7 @@ function plasserRør() {
         høyde: rør.høyde,
         passert: false
     };
+    
     rør.array.push(toppRørObjekt);
 
     let bunnRørObjekt = {
@@ -197,9 +166,11 @@ function flyttFugl(e) {
         flakseLydfil.currentTime = 0; 
         flakseLydfil.play();
 
-        if (spill.slutt) {
-            resetSpill();
+        if(spill.slutt==true && e.code == "Space" || e.code == "ArrowUp" || e.code == "KeyX"){
+            console.log("startSpill")
+            startSpill()
         }
+    
     }
 
 
@@ -239,7 +210,47 @@ function oppdaterLeaderboard() {
     });
 
     localStorage.setItem("leaderboard", JSON.stringify(leaderboard));
+
 }
+
+//Starter spillet
+function startSpill() {
+
+    resetSpill();
+
+    rørIntervall = setInterval(plasserRør, 1500);
+    document.addEventListener("keydown", flyttFugl);
+
+    console.log(fysikk, rør, fugl, brett, bunnRør, toppRør, spill)
+
+    brett.element = document.getElementById("brett");
+    brett.element.height = brett.høyde;
+    brett.element.width = brett.bredde;
+    kontekst = brett.element.getContext("2d");
+
+    fugl.bilde = new Image();
+    fugl.bilde.src = "Bilder/flappybird.png";
+    fugl.bilde.onload = function () {
+        kontekst.drawImage(fugl.bilde, fugl.x, fugl.y, fugl.bredde, fugl.høyde);
+    };
+
+    toppRør.bilde = new Image();
+    toppRør.bilde.src = "Bilder/toppipe.png";
+
+    bunnRør.bilde = new Image();
+    bunnRør.bilde.src = "Bilder/bottompipe.png";
+
+
+    oppdater();
+
+
+    if (localStorage.getItem("leaderboard")) {
+        leaderboard = JSON.parse(localStorage.getItem("leaderboard"));
+        oppdaterLeaderboard();
+    }
+
+}
+
 
 // Hamburgermeny
 const hamburger = document.getElementById('hamburger_meny');
