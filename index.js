@@ -119,7 +119,7 @@ function tegnFugl() {
 }
 
 function tegnRoer(){
-     // Roer
+     // Rør
      for (let i = 0; i < rør.array.length; i++) {
         let rørObjekt = rør.array[i];
         rørObjekt.x += fysikk.fartX;
