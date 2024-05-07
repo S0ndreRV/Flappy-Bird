@@ -97,15 +97,25 @@ function oppdater() {
 }
 
 function tegnFugl() {
-      // Fugl
-      fysikk.fartY += fysikk.tyngdekraft;
-      fugl.y = Math.max(fugl.y + fysikk.fartY, 0);
-      kontekst.drawImage(fugl.bilde, fugl.x, fugl.y, fugl.bredde, fugl.høyde);
-  
-      if (fugl.y > brett.høyde || fugl.y < 0) {
-          spill.slutt = true;
-          spillSlutt();
-      }
+    // Fugl
+    fysikk.fartY += fysikk.tyngdekraft;
+    fugl.y = Math.max(fugl.y + fysikk.fartY, 0);
+
+    kontekst.save(); 
+
+    
+    let rotasjon = Math.min(Math.max(fysikk.fartY *2.5, -90), 90); 
+
+    kontekst.translate(fugl.x + fugl.bredde / 2, fugl.y + fugl.høyde / 2); 
+    kontekst.rotate(rotasjon * Math.PI / 180); 
+    kontekst.drawImage(fugl.bilde, -fugl.bredde / 2, -fugl.høyde / 2, fugl.bredde, fugl.høyde); 
+
+    kontekst.restore(); 
+
+    if (fugl.y > brett.høyde || fugl.y < 0) {
+        spill.slutt = true;
+        spillSlutt();
+    }
 }
 
 function tegnRoer(){
