@@ -264,12 +264,6 @@ function initBilder(){
     fugl.bilde = new Image();
     fugl.bilde.src = "Bilder/flappybird.png";
 
-    fugl.bildeOpp = new Image();
-    fugl.bildeOpp.src = "Bilder/flappybird_Opp.png";
-
-    //fugl.bildeNed = new Image();
-    //fugl.bildeNed.src = "Bilder/flappybird_ned.png";
-
     toppRoer.bilde = new Image();
     toppRoer.bilde.src = "Bilder/toppipe.png";
 
