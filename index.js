@@ -63,8 +63,8 @@ function resetSpill() {
     }
     fugl.y = brett.hoyde / 2;
     ror.array = [];
-    fysikk.fartX=-2
-    fysikk.fartY=0
+    fysikk.fartX = -2
+    fysikk.fartY = 0
     spill.poeng = 0;
     spill.slutt = false;
 }
@@ -73,7 +73,7 @@ function oppdater() {
 
     if (spill.slutt) {
         return;
- 
+
     }
 
     kontekst.clearRect(0, 0, brett.element.width, brett.element.height);
@@ -81,7 +81,7 @@ function oppdater() {
     tegnFugl();
 
     tegnRoer();
-  
+
 
     visPoeng()
 
@@ -89,7 +89,7 @@ function oppdater() {
 
 }
 
-function visPoeng(){
+function visPoeng() {
     kontekst.fillStyle = "white";
     kontekst.font = "45px sans-serif";
     kontekst.fillText(spill.poeng, 5, 45);
@@ -104,16 +104,16 @@ function tegnFugl() {
     fysikk.fartY += fysikk.tyngdekraft;
     fugl.y = Math.max(fugl.y + fysikk.fartY, 0);
 
-    kontekst.save(); 
+    kontekst.save();
 
-    
-    let rotasjon = Math.min(Math.max(fysikk.fartY *2.5, -90), 90); 
 
-    kontekst.translate(fugl.x + fugl.bredde / 2, fugl.y + fugl.hoyde / 2); 
-    kontekst.rotate(rotasjon * Math.PI / 180); 
-    kontekst.drawImage(fugl.bilde, -fugl.bredde / 2, -fugl.hoyde / 2, fugl.bredde, fugl.hoyde); 
+    let rotasjon = Math.min(Math.max(fysikk.fartY * 2.5, -90), 90);
 
-    kontekst.restore(); 
+    kontekst.translate(fugl.x + fugl.bredde / 2, fugl.y + fugl.hoyde / 2);
+    kontekst.rotate(rotasjon * Math.PI / 180);
+    kontekst.drawImage(fugl.bilde, -fugl.bredde / 2, -fugl.hoyde / 2, fugl.bredde, fugl.hoyde);
+
+    kontekst.restore();
 
     if (fugl.y > brett.hoyde || fugl.y < 0) {
         spill.slutt = true;
@@ -121,9 +121,9 @@ function tegnFugl() {
     }
 }
 
-function tegnRoer(){
-     // Ror
-     for (let i = 0; i < ror.array.length; i++) {
+function tegnRoer() {
+    // Ror
+    for (let i = 0; i < ror.array.length; i++) {
         let rorObjekt = ror.array[i];
         rorObjekt.x += fysikk.fartX;
         kontekst.drawImage(rorObjekt.bilde, rorObjekt.x, rorObjekt.y, rorObjekt.bredde, rorObjekt.hoyde);
@@ -139,8 +139,8 @@ function tegnRoer(){
             stolpeTrefferLydfil.play();
             setTimeout(function () {
                 dodLydfil.play();
-            }, stolpeTrefferLydfil.duration * 1000); 
-            spillSlutt(); 
+            }, stolpeTrefferLydfil.duration * 1000);
+            spillSlutt();
         }
 
     }
@@ -167,7 +167,7 @@ function plasserRoer() {
         hoyde: ror.hoyde,
         passert: false
     };
-    
+
     ror.array.push(toppRoerObjekt);
 
     let bunnRoerObjekt = {
@@ -185,14 +185,14 @@ function flyttFugl(e) {
     if (e.code == "Space") {
         fysikk.fartY = -6;
 
-        flakseLydfil.currentTime = 0; 
+        flakseLydfil.currentTime = 0;
         flakseLydfil.play();
 
-        if(spill.slutt==true && e.code == "Space" || e.code == "ArrowUp" || e.code == "KeyX"){
+        if (spill.slutt == true && e.code == "Space" || e.code == "ArrowUp" || e.code == "KeyX") {
             console.log("startSpill")
             startSpill()
         }
-    
+
     }
 
 
@@ -239,7 +239,7 @@ function leggTilILeaderboard(navn, poeng) {
 function oppdaterLeaderboard() {
     const leaderboardListe = document.getElementById("leaderboard-liste");
     leaderboardListe.innerHTML = "";
-    
+
     leaderboard.forEach((spiller, indeks) => {
         const li = document.createElement("li");
         li.textContent = `${indeks + 1}. ${spiller.navn}: ${spiller.poeng}`;
@@ -277,7 +277,7 @@ function startSpill() {
 
 }
 
-function initBilder(){
+function initBilder() {
 
     fugl.bilde = new Image();
     fugl.bilde.src = "Bilder/flappybird.png";
@@ -324,9 +324,9 @@ navbarButtonHjem.addEventListener("click", () => {
     visCanvasKnapp.style.display = "block";
     visCanvasKnapp.style.margin = "auto";
     footer.style.display = "block";
-    body.style.display="block";
-    leaderboardBody.style.display="none"
-    index.style.backgroundImage="url(Bilder/flappybird.bakgrunnsbilde.png)"
+    body.style.display = "block";
+    leaderboardBody.style.display = "none"
+    index.style.backgroundImage = "url(Bilder/flappybird.bakgrunnsbilde.png)"
 });
 
 
@@ -334,8 +334,8 @@ const navbarLeaderboard = document.querySelector(".navbar-button-leaderboard")
 const leaderboardBody = document.querySelector(".leaderboard_body")
 
 navbarLeaderboard.addEventListener("click", () => {
-    leaderboardBody.style.display="block"
-    body.style.display="none"
-    index.style.backgroundImage="url(Bilder/flappybird.bakgrunnsbilde.png)"
+    leaderboardBody.style.display = "block"
+    body.style.display = "none"
+    index.style.backgroundImage = "url(Bilder/flappybird.bakgrunnsbilde.png)"
 });
 

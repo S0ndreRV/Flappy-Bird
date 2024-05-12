@@ -1,66 +1,76 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Jersey+10&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Jersey+10&family=Pixelify+Sans:wght@400..700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Jersey+10&family=Pixelify+Sans:wght@400..700&display=swap"
+        rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Jersey+10&family=Pixelify+Sans:wght@400..700&family=Seymour+One&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Jersey+10&family=Pixelify+Sans:wght@400..700&family=Seymour+One&display=swap"
+        rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap"
+        rel="stylesheet">
     <title>Flappy Bird</title>
     <link rel="stylesheet" href="index.css">
 </head>
+
 <body class="index">
-    
+
     <header class="header">
         <nav class="navbar">
             <ul class="navbar-list">
                 <li class="navbar-logo">
-                    <button class="navbar-button"><img class="logo" src="Bilder/Flappy_Logo.png" alt="Logo"></button>
+                    <div class="navbar-div"><img class="logo" src="Bilder/Flappy_Logo.png" alt="Logo"></div>
                 </li>
-                <li class="navbar-item"><button class="navbar-button navbar_button_hjem">Hjem</button></li>
-                <li class="navbar-item"><button class="navbar-button navbar-button-leaderboard">Leaderboard</button></li>
+                <li class="navbar-item"><button class="navbar-div navbar_button_hjem">Hjem</button></li>
+                <li class="navbar-item"><button class="navbar-div navbar-button-leaderboard">Leaderboard</button></li>
             </ul>
-            
+
         </nav>
 
     </header>
 
     <section class="body">
 
-    <div class="hamburger_div">
-        <div id="hamburger_meny">
-            <p class="burger"></p>
+        <div class="hamburger_div">
+            <div id="hamburger_meny">
+                <p class="burger"></p>
+            </div>
+            <div class="spilleregler_div">
+                <ol class="regler_ol">
+                    <li class="regler_li">Kontroll: Spilleren styrer en fugl som flyr ved å trykke på "Spacebar" for å
+                        unngå rør.</li>
+                    <li class="regler_li">Unngå hindringer: Målet er å manøvrere fuglen gjennom åpninger mellom
+                        vertikale rør.</li>
+                    <li class="regler_li">Poeng: Spilleren tjener poeng for hver vellykket passering gjennom et sett med
+                        rør.</li>
+                    <li class="regler_li">Kollisjoner: Hvis fuglen treffer et rør eller bakken, avsluttes spillet.</li>
+                </ol>
+            </div>
         </div>
-        <div class="spilleregler_div">
-            <ol class="regler_ol">
-                <li class="regler_li">Kontroll: Spilleren styrer en fugl som flyr ved å trykke på "Spacebar" for å unngå rør.</li>
-                <li class="regler_li">Unngå hindringer: Målet er å manøvrere fuglen gjennom åpninger mellom vertikale rør.</li>
-                <li class="regler_li">Poeng: Spilleren tjener poeng for hver vellykket passering gjennom et sett med rør.</li>
-                <li class="regler_li">Kollisjoner: Hvis fuglen treffer et rør eller bakken, avsluttes spillet.</li>
-            </ol>
+        <div class="knapp_canvas_div">
+            <button class="vis_canvas_knapp">Flappybird</button>
         </div>
-    </div>
-    <div class="knapp_canvas_div">
-        <button class="vis_canvas_knapp">Flappybird</button>
-    </div>
-    <div class="canvas_div">
-        <canvas id="brett"></canvas>
-    </div>
+        <div class="canvas_div">
+            <canvas id="brett"></canvas>
+        </div>
 
     </section>
 
     <section class="leaderboard_body">
-    <div class="leaderboard_div">
-        <h2 id="leaderboard_header">Leaderboard</h2>
-        <ol id="leaderboard-liste"></ol>
-    </div>
+        <div class="leaderboard_div">
+            <h2 id="leaderboard_header">Leaderboard</h2>
+            <ol id="leaderboard-liste"></ol>
+        </div>
     </section>
 
     <div class="footer">
@@ -69,4 +79,5 @@
 
     <script src="index.js"></script>
 </body>
+
 </html>
