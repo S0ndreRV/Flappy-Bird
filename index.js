@@ -2,22 +2,22 @@
 let brett = {
     element: null,
     bredde: 360,
-    høyde: 640
+    hoyde: 640
 };
 
 
 let fugl = {
     x: brett.bredde / 8,
-    y: brett.høyde / 2,
+    y: brett.hoyde / 2,
     bredde: 34,
-    høyde: 24
+    hoyde: 24
 };
 
 
-let rør = {
+let ror = {
     array: [],
     bredde: 64,
-    høyde: 512,
+    hoyde: 512,
     x: brett.bredde,
     y: 0
 };
@@ -46,23 +46,23 @@ let bunnRoer = {
 
 const flakseLydfil = new Audio("Lyder/flappyflaks.mp3");
 const stolpeTrefferLydfil = new Audio("Lyder/flappy-treff-stolpe.mp3");
-const dødLydfil = new Audio("Lyder/flappydie.mp3");
+const dodLydfil = new Audio("Lyder/flappydie.mp3");
 const poengLydfil = new Audio("Lyder/flappypoint.mp3");
 
-let rørIntervall = null;
+let rorIntervall = null;
 
 let leaderboard = [];
 
 
 function resetSpill() {
     console.log("RESET Spill")
-    if (rørIntervall) {
-        clearInterval(rørIntervall);
-        rørIntervall = null;
+    if (rorIntervall) {
+        clearInterval(rorIntervall);
+        rorIntervall = null;
         console.log("clearinterval")
     }
-    fugl.y = brett.høyde / 2;
-    rør.array = [];
+    fugl.y = brett.hoyde / 2;
+    ror.array = [];
     fysikk.fartX=-2
     fysikk.fartY=0
     spill.poeng = 0;
@@ -109,45 +109,45 @@ function tegnFugl() {
     
     let rotasjon = Math.min(Math.max(fysikk.fartY *2.5, -90), 90); 
 
-    kontekst.translate(fugl.x + fugl.bredde / 2, fugl.y + fugl.høyde / 2); 
+    kontekst.translate(fugl.x + fugl.bredde / 2, fugl.y + fugl.hoyde / 2); 
     kontekst.rotate(rotasjon * Math.PI / 180); 
-    kontekst.drawImage(fugl.bilde, -fugl.bredde / 2, -fugl.høyde / 2, fugl.bredde, fugl.høyde); 
+    kontekst.drawImage(fugl.bilde, -fugl.bredde / 2, -fugl.hoyde / 2, fugl.bredde, fugl.hoyde); 
 
     kontekst.restore(); 
 
-    if (fugl.y > brett.høyde || fugl.y < 0) {
+    if (fugl.y > brett.hoyde || fugl.y < 0) {
         spill.slutt = true;
         spillSlutt();
     }
 }
 
 function tegnRoer(){
-     // Rør
-     for (let i = 0; i < rør.array.length; i++) {
-        let rørObjekt = rør.array[i];
-        rørObjekt.x += fysikk.fartX;
-        kontekst.drawImage(rørObjekt.bilde, rørObjekt.x, rørObjekt.y, rørObjekt.bredde, rørObjekt.høyde);
+     // Ror
+     for (let i = 0; i < ror.array.length; i++) {
+        let rorObjekt = ror.array[i];
+        rorObjekt.x += fysikk.fartX;
+        kontekst.drawImage(rorObjekt.bilde, rorObjekt.x, rorObjekt.y, rorObjekt.bredde, rorObjekt.hoyde);
 
-        if (!rørObjekt.passert && fugl.x > rørObjekt.x + rørObjekt.bredde) {
+        if (!rorObjekt.passert && fugl.x > rorObjekt.x + rorObjekt.bredde) {
             spill.poeng += 0.5;
-            rørObjekt.passert = true;
+            rorObjekt.passert = true;
             poengLydfil.play();
         }
 
-        if (oppdagKollisjon(fugl, rørObjekt)) {
+        if (oppdagKollisjon(fugl, rorObjekt)) {
             spill.slutt = true;
             stolpeTrefferLydfil.play();
             setTimeout(function () {
-                dødLydfil.play();
+                dodLydfil.play();
             }, stolpeTrefferLydfil.duration * 1000); 
             spillSlutt(); 
         }
 
     }
 
-    // Fjern rør
-    while (rør.array.length > 0 && rør.array[0].x < -rør.bredde) {
-        rør.array.shift();
+    // Fjern ror
+    while (ror.array.length > 0 && ror.array[0].x < -ror.bredde) {
+        ror.array.shift();
     }
 }
 
@@ -156,29 +156,29 @@ function plasserRoer() {
         return;
     }
 
-    let tilfeldigRoerY = rør.y - rør.høyde / 4 - Math.random() * (rør.høyde / 2);
-    let aapningsplass = brett.høyde / 4;
+    let tilfeldigRoerY = ror.y - ror.hoyde / 4 - Math.random() * (ror.hoyde / 2);
+    let aapningsplass = brett.hoyde / 4;
 
     let toppRoerObjekt = {
         bilde: toppRoer.bilde,
-        x: rør.x,
+        x: ror.x,
         y: tilfeldigRoerY,
-        bredde: rør.bredde,
-        høyde: rør.høyde,
+        bredde: ror.bredde,
+        hoyde: ror.hoyde,
         passert: false
     };
     
-    rør.array.push(toppRoerObjekt);
+    ror.array.push(toppRoerObjekt);
 
     let bunnRoerObjekt = {
         bilde: bunnRoer.bilde,
-        x: rør.x,
-        y: tilfeldigRoerY + rør.høyde + aapningsplass,
-        bredde: rør.bredde,
-        høyde: rør.høyde,
+        x: ror.x,
+        y: tilfeldigRoerY + ror.hoyde + aapningsplass,
+        bredde: ror.bredde,
+        hoyde: ror.hoyde,
         passert: false
     };
-    rør.array.push(bunnRoerObjekt);
+    ror.array.push(bunnRoerObjekt);
 }
 
 function flyttFugl(e) {
@@ -200,12 +200,12 @@ function flyttFugl(e) {
     fugl.y = Math.max(fugl.y + fysikk.fartY, 0);
 
     kontekst.save();
-    kontekst.translate(fugl.x + fugl.bredde / 2, fugl.y + fugl.høyde / 2);
+    kontekst.translate(fugl.x + fugl.bredde / 2, fugl.y + fugl.hoyde / 2);
     kontekst.rotate(fugl.rotasjon * Math.PI / 180);
-    kontekst.drawImage(fugl.bilde, -fugl.bredde / 2, -fugl.høyde / 2, fugl.bredde, fugl.høyde);
+    kontekst.drawImage(fugl.bilde, -fugl.bredde / 2, -fugl.hoyde / 2, fugl.bredde, fugl.hoyde);
     kontekst.restore();
 
-    if (fugl.y > brett.høyde || fugl.y < 0) {
+    if (fugl.y > brett.hoyde || fugl.y < 0) {
         spill.slutt = true;
         spillSlutt();
     }
@@ -216,8 +216,8 @@ function flyttFugl(e) {
 function oppdagKollisjon(a, b) {
     return a.x < b.x + b.bredde &&
         a.x + a.bredde > b.x &&
-        a.y < b.y + b.høyde &&
-        a.y + a.høyde > b.y;
+        a.y < b.y + b.hoyde &&
+        a.y + a.hoyde > b.y;
 }
 
 // Leaderboard
@@ -255,13 +255,13 @@ function startSpill() {
 
     resetSpill();
 
-    rørIntervall = setInterval(plasserRoer, 1500);
+    rorIntervall = setInterval(plasserRoer, 1500);
     document.addEventListener("keydown", flyttFugl);
 
-    console.log(fysikk, rør, fugl, brett, bunnRoer, toppRoer, spill)
+    console.log(fysikk, ror, fugl, brett, bunnRoer, toppRoer, spill)
 
     brett.element = document.getElementById("brett");
-    brett.element.height = brett.høyde;
+    brett.element.height = brett.hoyde;
     brett.element.width = brett.bredde;
     kontekst = brett.element.getContext("2d");
 
