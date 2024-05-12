@@ -83,7 +83,13 @@ function oppdater() {
     tegnRoer();
   
 
-    // Poeng
+    visPoeng()
+
+    requestAnimationFrame(oppdater);
+
+}
+
+function visPoeng(){
     kontekst.fillStyle = "white";
     kontekst.font = "45px sans-serif";
     kontekst.fillText(spill.poeng, 5, 45);
@@ -91,9 +97,6 @@ function oppdater() {
     if (spill.slutt) {
         kontekst.fillText("SPILL SLUTT", 5, 90);
     }
-
-    requestAnimationFrame(oppdater);
-
 }
 
 function tegnFugl() {
