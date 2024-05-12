@@ -179,7 +179,7 @@ function plasserRoer() {
 }
 
 function flyttFugl(e) {
-    if (e.code == "Space" || e.code == "ArrowUp" || e.code == "KeyX") {
+    if (e.code == "Space") {
         fysikk.fartY = -6;
 
         flakseLydfil.currentTime = 0; 
@@ -193,7 +193,22 @@ function flyttFugl(e) {
     }
 
 
+    fysikk.fartY += fysikk.tyngdekraft;
+    fugl.y = Math.max(fugl.y + fysikk.fartY, 0);
+
+    kontekst.save();
+    kontekst.translate(fugl.x + fugl.bredde / 2, fugl.y + fugl.høyde / 2);
+    kontekst.rotate(fugl.rotasjon * Math.PI / 180);
+    kontekst.drawImage(fugl.bilde, -fugl.bredde / 2, -fugl.høyde / 2, fugl.bredde, fugl.høyde);
+    kontekst.restore();
+
+    if (fugl.y > brett.høyde || fugl.y < 0) {
+        spill.slutt = true;
+        spillSlutt();
+    }
 }
+
+
 
 function oppdagKollisjon(a, b) {
     return a.x < b.x + b.bredde &&
