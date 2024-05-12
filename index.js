@@ -157,7 +157,7 @@ function plasserRoer() {
     }
 
     let tilfeldigRoerY = rør.y - rør.høyde / 4 - Math.random() * (rør.høyde / 2);
-    let åpningsplass = brett.høyde / 4;
+    let aapningsplass = brett.høyde / 4;
 
     let toppRoerObjekt = {
         bilde: toppRoer.bilde,
@@ -173,7 +173,7 @@ function plasserRoer() {
     let bunnRoerObjekt = {
         bilde: bunnRoer.bilde,
         x: rør.x,
-        y: tilfeldigRoerY + rør.høyde + åpningsplass,
+        y: tilfeldigRoerY + rør.høyde + aapningsplass,
         bredde: rør.bredde,
         høyde: rør.høyde,
         passert: false
